@@ -85,6 +85,16 @@ export const getCurrentUser = async (): Promise<Models.Document> => {
   }
 }
 
+export const signOut = async () => {
+  try {
+    const session = await account.deleteSession('current');
+
+    return session;
+  } catch(error) {
+    throw error;
+  }
+}
+
 export const getAllPosts = async (): Promise<IVideo[]> => {
   try {
     const posts = await databases.listDocuments<IVideo>(
@@ -106,6 +116,23 @@ export const searchPosts = async (query: string): Promise<IVideo[]> => {
       config.databaseId,
       config.videoCollectionId,
       [Query.search("title", query)]
+    );
+
+    if (!posts) throw new Error('Something went wrong');
+
+    return posts.documents;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export const getUserPosts = async (userId: string): Promise<IVideo[]> => {
+  try {
+    const posts = await databases.listDocuments<IVideo>(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.equal("creator", userId)]
     );
 
     if (!posts) throw new Error('Something went wrong');
