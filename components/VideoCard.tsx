@@ -3,11 +3,9 @@ import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
+import { IVideoProperties } from "@/lib/types";
 
-interface IVideoCard {
-  title: string;
-  thumbnail: string;
-  video: string;
+interface IVideoCard extends Omit<IVideoProperties, 'prompt'> {
   creator: string;
   avatar: string;
 }
