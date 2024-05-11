@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { router, usePathname } from "expo-router";
 import { View, TouchableOpacity, Image, TextInput, Alert } from "react-native";
 
 import { icons } from "../constants";
 
-const SearchInput = ({ initialQuery }: { initialQuery?: string }) => {
+interface ISearchInput {
+  initialQuery?: string;
+}
+
+const SearchInput: FC<ISearchInput> = ({ initialQuery }) => {
   const pathname = usePathname();
   const [query, setQuery] = useState(initialQuery || "");
 

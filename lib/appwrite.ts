@@ -100,6 +100,23 @@ export const getAllPosts = async (): Promise<IVideo[]> => {
   }
 }
 
+export const searchPosts = async (query: string): Promise<IVideo[]> => {
+  try {
+    const posts = await databases.listDocuments<IVideo>(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.search("title", query)]
+    );
+
+    if (!posts) throw new Error('Something went wrong');
+
+    return posts.documents;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export const getLatestPosts = async (): Promise<IVideo[]> => {
   try {
     const posts = await databases.listDocuments<IVideo>(
