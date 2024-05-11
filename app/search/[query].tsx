@@ -37,7 +37,7 @@ const Search = () => {
                 Search Results
               </Text>
               <Text className="text-2xl font-psemibold text-white mt-1">
-                {query}
+                {query as string}
               </Text>
 
               <View className="mt-6 mb-8">
