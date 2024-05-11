@@ -1,4 +1,5 @@
 import { Client, Account, ID, Avatars, Databases, Models, Query } from 'react-native-appwrite/src';
+import { IVideo } from "@/lib/types";
 
 export const config = {
   endpoint: 'https://cloud.appwrite.io/v1',
@@ -80,6 +81,35 @@ export const getCurrentUser = async (): Promise<Models.Document> => {
   } catch (error) {
     console.log(error);
 
+    throw error;
+  }
+}
+
+export const getAllPosts = async (): Promise<IVideo[]> => {
+  try {
+    const posts = await databases.listDocuments<IVideo>(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.orderDesc('$createdAt'), Query.limit(7)]
+    );
+
+    return posts.documents;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export const getLatestPosts = async (): Promise<IVideo[]> => {
+  try {
+    const posts = await databases.listDocuments<IVideo>(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.orderDesc("$createdAt"), Query.limit(7)]
+    );
+
+    return posts.documents;
+  } catch (error) {
     throw error;
   }
 }
